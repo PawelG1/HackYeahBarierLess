@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../domain/entities/observation.dart';
 import '../../data/repositories/asset_route_repository.dart';
 import '../../data/repositories/local_observation_repository.dart';
 import '../../data/sources/asset_json_source.dart';
@@ -53,3 +54,9 @@ final addObservationUseCaseProvider = Provider<AddObservation>((ref) {
 final highContrastThemeProvider = StateProvider<bool>((ref) => false);
 
 final textScaleProvider = StateProvider<double>((ref) => 1.0);
+
+final pointObservationsProvider = FutureProvider<List<Observation>>((ref) async {
+  final repo = ref.read(observationRepositoryProvider);
+  final obs = await repo.getLocalObservations();
+  return obs.where((o) => o.targetType == 'point').toList();
+});

@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import '../../core/design_system/design_system.dart';
+import '../../core/di/providers.dart';
+import '../../domain/entities/observation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/route_node.dart';
 import '../../domain/entities/route_result.dart';
 
 /// Podgląd wizualny trasy na mapie OpenStreetMap z zabezpieczeniem offline.
-class MapPreview extends StatelessWidget {
+class MapPreview extends ConsumerWidget {
   final RouteResult? route;
   final List<RouteNode> allNodes;
   final double? height;
   final int? highlightedStepIndex;
+  final void Function(LatLng)? onMapTap;
 
   const MapPreview({
     super.key,
@@ -18,11 +22,14 @@ class MapPreview extends StatelessWidget {
     required this.allNodes,
     this.height,
     this.highlightedStepIndex,
+    this.onMapTap,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final effectiveHeight = height ?? context.dimensions.mapPreviewHeight;
+    final pointObsAsync = ref.watch(pointObservationsProvider);
+    final List<Observation> pointObs = pointObsAsync.value ?? [];
     final nodeMap = {for (var n in allNodes) n.id: LatLng(n.lat, n.lon)};
 
     final lineColor = route == null
@@ -105,6 +112,7 @@ class MapPreview extends StatelessWidget {
               options: MapOptions(
                 initialCenter: initialCenter,
                 initialZoom: 16.0,
+                onTap: (tapPosition, point) => onMapTap?.call(point),
               ),
               children: [
                 TileLayer(
@@ -147,6 +155,29 @@ class MapPreview extends StatelessWidget {
                             size: context.dimensions.iconXXLarge,
                           ),
                         ),
+                      // Zgłoszone przeszkody na mapie
+                      ...pointObs.map((obs) {
+                        final parts = obs.targetId.split(',');
+                        if (parts.length == 2) {
+                          final lat = double.tryParse(parts[0]);
+                          final lon = double.tryParse(parts[1]);
+                          if (lat != null && lon != null) {
+                            return Marker(
+                              point: LatLng(lat, lon),
+                              child: Tooltip(
+                                message: '${obs.feature}\n${obs.value}\nCzas: ${obs.observedAt.toLocal().toString().substring(0, 16)}',
+                                child: Icon(
+                                  Icons.warning,
+                                  color: context.colors.error,
+                                  size: context.dimensions.iconLarge,
+                                ),
+                              ),
+                            );
+                          }
+                        }
+                        return null;
+                      }).whereType<Marker>(),
+
                     ],
                   ),
               ],

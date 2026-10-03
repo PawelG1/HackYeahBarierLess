@@ -559,7 +559,13 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      final attractionBtn = find.text('Teatr im. Juliusza Słowackiego');
+      expect(attractionBtn, findsOneWidget);
+      await tester.tap(attractionBtn);
+      await tester.pumpAndSettle();
+
       expect(find.text('Unikam schodów'), findsOneWidget);
+
 
       // Krok 2: Kliknięcie „Porównaj warianty tras”
       final compareBtn = find.text('Porównaj warianty tras');

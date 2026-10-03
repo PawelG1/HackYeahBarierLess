@@ -88,6 +88,7 @@ class RouteComparisonVm extends AsyncNotifier<RouteComparisonState?> {
 
     final addObs = ref.read(addObservationUseCaseProvider);
     await addObs(observation);
+    ref.invalidate(pointObservationsProvider);
 
     // Ponowne przeliczenie tras z nową obserwacją w pamięci
     await evaluate(

@@ -24,4 +24,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/data/demo_area.json
+    - assets/images/attractions/
 

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/design_system/design_system.dart';
 import '../../domain/entities/route_node.dart';
+import '../viewmodels/route_comparison_vm.dart';
+import '../../domain/entities/observation.dart';
 import '../../domain/entities/route_result.dart';
 import '../widgets/a11y_actions.dart';
 import '../widgets/map_preview.dart';
 
-class RouteNavigationScreen extends StatefulWidget {
+class RouteNavigationScreen extends ConsumerStatefulWidget {
   final RouteResult route;
   final List<RouteNode> allNodes;
 
@@ -16,10 +20,10 @@ class RouteNavigationScreen extends StatefulWidget {
   });
 
   @override
-  State<RouteNavigationScreen> createState() => _RouteNavigationScreenState();
+  ConsumerState<RouteNavigationScreen> createState() => _RouteNavigationScreenState();
 }
 
-class _RouteNavigationScreenState extends State<RouteNavigationScreen> {
+class _RouteNavigationScreenState extends ConsumerState<RouteNavigationScreen> {
   int _currentStepIndex = 0;
 
   void _nextStep() {
@@ -37,6 +41,68 @@ class _RouteNavigationScreenState extends State<RouteNavigationScreen> {
   void _finish() {
     Navigator.of(context).pop();
   }
+
+  Future<void> _showReportObstacleDialog(BuildContext context, LatLng point) async {
+    final descriptionController = TextEditingController();
+    
+    return showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          title: const Text('Zgłoś przeszkodę na mapie'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Współrzędne: ${point.latitude.toStringAsFixed(4)}, ${point.longitude.toStringAsFixed(4)}'),
+              const SizedBox(height: 8),
+              Text('Czas: ${DateTime.now().toLocal().toString().substring(0, 16)}'),
+              const SizedBox(height: 16),
+              TextField(
+                controller: descriptionController,
+                decoration: const InputDecoration(
+                  labelText: 'Opis przeszkody (opcjonalnie)',
+                  border: OutlineInputBorder(),
+                ),
+                maxLines: 3,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: const Text('Anuluj'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final obs = Observation(
+                  id: 'obs-${DateTime.now().millisecondsSinceEpoch}',
+                  targetType: 'point',
+                  targetId: '${point.latitude},${point.longitude}',
+                  feature: 'user_reported_obstacle',
+                  value: descriptionController.text.isEmpty ? 'przeszkoda' : descriptionController.text,
+                  sourceName: 'Zgłoszenie Użytkownika',
+                  observedAt: DateTime.now(),
+                  verification: VerificationStatus.community_unverified,
+                );
+                
+                await ref.read(routeComparisonVmProvider.notifier).addLocalObservation(obs);
+                
+                if (ctx.mounted) {
+                  Navigator.of(ctx).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Zgłoszenie zostało wysłane i zapisane lokalnie.')),
+                  );
+                }
+              },
+              child: const Text('Dodaj zgłoszenie'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   String _formatNodeName(String nodeId) {
     if (nodeId.startsWith('n-')) {
@@ -106,6 +172,7 @@ class _RouteNavigationScreenState extends State<RouteNavigationScreen> {
                   route: widget.route,
                   allNodes: widget.allNodes,
                   highlightedStepIndex: _currentStepIndex,
+                  onMapTap: (point) => _showReportObstacleDialog(context, point),
                 ),
               ),
               SizedBox(height: context.spacing.sm),
