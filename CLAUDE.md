@@ -72,3 +72,9 @@ Więcej szczegółów w plikach:
 - [docs/ARCHITECTURE.md](file:///home/mecharolnik/HackYeahCracowApp/docs/ARCHITECTURE.md)
 - [docs/TEST_SCENARIOS.md](file:///home/mecharolnik/HackYeahCracowApp/docs/TEST_SCENARIOS.md)
 - [docs/AGENT_ORCHESTRATION.md](file:///home/mecharolnik/HackYeahCracowApp/docs/AGENT_ORCHESTRATION.md)
+
+---
+
+## 4. Zasady współpracy z użytkownikiem i commitowania (User Collaboration Rules)
+1. **Bezwzględny zakaz samodzielnego commitowania bez wyraźnej aprobaty użytkownika!** Po wykonaniu zadania, poczekaj na review. 
+2. **Uwaga na kontrast i kolory (UI/UX):** Zawsze weryfikuj czy przyciski akcji są widoczne w domyślnym i wysokim kontraście. Należy używać kolorów bazowych (jak `primary` / `onPrimary`), które system motywów gwarantuje jako czytelne, a nie statycznych z hardkodowanych palet (zwłaszcza gdy tworzy się nowe ekrany/akcje).

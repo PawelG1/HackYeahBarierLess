@@ -3,6 +3,7 @@ import '../../core/design_system/design_system.dart';
 import '../../domain/entities/route_node.dart';
 import '../../domain/entities/route_result.dart';
 import '../widgets/a11y_actions.dart';
+import '../widgets/map_preview.dart';
 
 class RouteNavigationScreen extends StatefulWidget {
   final RouteResult route;
@@ -99,8 +100,17 @@ class _RouteNavigationScreenState extends State<RouteNavigationScreen> {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: context.spacing.lg),
               Expanded(
+                flex: 3,
+                child: MapPreview(
+                  route: widget.route,
+                  allNodes: widget.allNodes,
+                  highlightedStepIndex: _currentStepIndex,
+                ),
+              ),
+              SizedBox(height: context.spacing.sm),
+              Expanded(
+                flex: 2,
                 child: AppCard(
                   child: Padding(
                     padding: context.spacing.cardPadding,
@@ -175,8 +185,8 @@ class _RouteNavigationScreenState extends State<RouteNavigationScreen> {
                       label: 'Zakończ nawigację',
                       child: ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: context.colors.statusConfirmedBg,
-                          foregroundColor: context.colors.statusConfirmedFg,
+                          backgroundColor: context.colors.primary,
+                          foregroundColor: context.colors.onPrimary,
                           padding: context.spacing.buttonDensePadding,
                         ),
                         onPressed: _finish,

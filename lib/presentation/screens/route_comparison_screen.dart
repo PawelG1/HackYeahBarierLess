@@ -123,8 +123,8 @@ class _RouteComparisonScreenState extends ConsumerState<RouteComparisonScreen> {
                           ),                          SizedBox(height: context.spacing.sm),
                           ElevatedButton.icon(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: context.colors.statusConfirmedBg,
-                              foregroundColor: context.colors.background,
+                              backgroundColor: context.colors.primary,
+                              foregroundColor: context.colors.onPrimary,
                               minimumSize: Size(
                                 double.infinity,
                                 context.dimensions.minTouchTarget,
@@ -249,8 +249,8 @@ class _RouteComparisonScreenState extends ConsumerState<RouteComparisonScreen> {
                   ),                  SizedBox(height: context.spacing.sm),
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: context.colors.statusConfirmedBg,
-                      foregroundColor: context.colors.background,
+                      backgroundColor: context.colors.primary,
+                      foregroundColor: context.colors.onPrimary,
                       padding: context.spacing.buttonDensePadding,
                       minimumSize: context.dimensions.fullWidthButtonDenseSize,
                     ),
