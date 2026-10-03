@@ -1,0 +1,263 @@
+{
+  "schema_version": 1,
+  "area": {
+    "id": "demo-area",
+    "name": "Obszar demonstracyjny Kraków — Stare Miasto",
+    "data_kind": "demo"
+  },
+  "places": [
+    {
+      "id": "p-teatr-slowackiego",
+      "name": "Teatr im. Juliusza Słowackiego w Krakowie",
+      "node_id": "n-teatr-slowackiego"
+    },
+    {
+      "id": "p-teatr-bagatela",
+      "name": "Teatr Bagatela (wejście od ul. Krupniczej)",
+      "node_id": "n-bagatela"
+    },
+    {
+      "id": "p-sukiennice",
+      "name": "Sukiennice — Galeria Sztuki Polskiej XIX w.",
+      "node_id": "n-sukiennice"
+    },
+    {
+      "id": "p-wawel",
+      "name": "Zamek Królewski na Wawelu (Dziedziniec)",
+      "node_id": "n-wawel"
+    },
+    {
+      "id": "p-bunkier-sztuki",
+      "name": "Bunkier Sztuki — Galeria Sztuki Współczesnej",
+      "node_id": "n-bunkier"
+    }
+  ],
+  "nodes": [
+    {"id": "n-dworzec", "lat": 50.0665, "lon": 19.9482},
+    {"id": "n-tunel-start", "lat": 50.0655, "lon": 19.9460},
+    {"id": "n-tunel-end", "lat": 50.0648, "lon": 19.9448},
+    {"id": "n-basztowa", "lat": 50.0658, "lon": 19.9445},
+    {"id": "n-planty-polnoc", "lat": 50.0645, "lon": 19.9438},
+    {"id": "n-westerplatte", "lat": 50.0640, "lon": 19.9465},
+    {"id": "n-teatr-slowackiego", "lat": 50.0638, "lon": 19.9425},
+    {"id": "n-mogilskie", "lat": 50.0660, "lon": 19.9590},
+    {"id": "n-lubicz", "lat": 50.0648, "lon": 19.9510},
+    {"id": "n-bagatela", "lat": 50.0635, "lon": 19.9325},
+    {"id": "n-sukiennice", "lat": 50.0617, "lon": 19.9373},
+    {"id": "n-wawel", "lat": 50.0540, "lon": 19.9355},
+    {"id": "n-bunkier", "lat": 50.0630, "lon": 19.9338}
+  ],
+  "edges": [
+    {
+      "id": "e-dworzec-tunel",
+      "from": "n-dworzec",
+      "to": "n-tunel-start",
+      "distance_m": 55,
+      "feature": "flat_pavement"
+    },
+    {
+      "id": "e-tunel-schody",
+      "from": "n-tunel-start",
+      "to": "n-tunel-end",
+      "distance_m": 60,
+      "feature": "stairs"
+    },
+    {
+      "id": "e-tunel-slowacki",
+      "from": "n-tunel-end",
+      "to": "n-teatr-slowackiego",
+      "distance_m": 70,
+      "feature": "asphalt_path"
+    },
+    {
+      "id": "e-dworzec-basztowa",
+      "from": "n-dworzec",
+      "to": "n-basztowa",
+      "distance_m": 85,
+      "feature": "curb_ramp"
+    },
+    {
+      "id": "e-basztowa-planty",
+      "from": "n-basztowa",
+      "to": "n-planty-polnoc",
+      "distance_m": 90,
+      "feature": "flat_pavement"
+    },
+    {
+      "id": "e-planty-slowacki",
+      "from": "n-planty-polnoc",
+      "to": "n-teatr-slowackiego",
+      "distance_m": 80,
+      "feature": "asphalt_path"
+    },
+    {
+      "id": "e-dworzec-westerplatte",
+      "from": "n-dworzec",
+      "to": "n-westerplatte",
+      "distance_m": 110,
+      "feature": "sidewalk"
+    },
+    {
+      "id": "e-westerplatte-slowacki",
+      "from": "n-westerplatte",
+      "to": "n-teatr-slowackiego",
+      "distance_m": 95,
+      "feature": "sidewalk"
+    },
+    {
+      "id": "e-mogilskie-lubicz",
+      "from": "n-mogilskie",
+      "to": "n-lubicz",
+      "distance_m": 350,
+      "feature": "asphalt_path"
+    },
+    {
+      "id": "e-lubicz-dworzec",
+      "from": "n-lubicz",
+      "to": "n-dworzec",
+      "distance_m": 220,
+      "feature": "flat_pavement"
+    },
+    {
+      "id": "e-planty-bagatela",
+      "from": "n-planty-polnoc",
+      "to": "n-bagatela",
+      "distance_m": 420,
+      "feature": "flat_pavement"
+    },
+    {
+      "id": "e-planty-sukiennice",
+      "from": "n-planty-polnoc",
+      "to": "n-sukiennice",
+      "distance_m": 310,
+      "feature": "pedestrian_zone"
+    },
+    {
+      "id": "e-sukiennice-wawel",
+      "from": "n-sukiennice",
+      "to": "n-wawel",
+      "distance_m": 650,
+      "feature": "asphalt_ramp"
+    },
+    {
+      "id": "e-bagatela-bunkier",
+      "from": "n-bagatela",
+      "to": "n-bunkier",
+      "distance_m": 120,
+      "feature": "flat_pavement"
+    }
+  ],
+  "observations": [
+    {
+      "id": "o-tunel-schody",
+      "target_type": "edge",
+      "target_id": "e-tunel-schody",
+      "feature": "stairs",
+      "value": "present",
+      "source_name": "Audyt barier architektonicznych ZDMK",
+      "source_url": null,
+      "observed_at": "2026-09-15",
+      "verification": "demo"
+    },
+    {
+      "id": "o-dworzec-basztowa-ramp",
+      "target_type": "edge",
+      "target_id": "e-dworzec-basztowa",
+      "feature": "curb_ramp",
+      "value": "present",
+      "source_name": "OpenStreetMap Contributors",
+      "source_url": "https://www.openstreetmap.org",
+      "observed_at": "2026-09-10",
+      "verification": "demo"
+    },
+    {
+      "id": "o-planty-stairs-absent",
+      "target_type": "edge",
+      "target_id": "e-planty-slowacki",
+      "feature": "stairs",
+      "value": "absent",
+      "source_name": "Zarząd Zieleni Miejskiej Kraków",
+      "source_url": null,
+      "observed_at": "2026-09-20",
+      "verification": "demo"
+    },
+    {
+      "id": "o-westerplatte-old-observation",
+      "target_type": "edge",
+      "target_id": "e-westerplatte-slowacki",
+      "feature": "surface_quality",
+      "value": "damaged_tiles",
+      "source_name": "Zgłoszenie mieszkańca",
+      "source_url": null,
+      "observed_at": "2026-03-01",
+      "verification": "community_unverified"
+    },
+    {
+      "id": "o-teatr-wejscie-rampa",
+      "target_type": "place",
+      "target_id": "p-teatr-slowackiego",
+      "feature": "wheelchair_ramp",
+      "value": "present",
+      "source_name": "Dział Dostępności Teatru im. J. Słowackiego",
+      "source_url": "https://teatrwkrakowie.pl/dostepnosc",
+      "observed_at": "2026-09-01",
+      "verification": "confirmed"
+    },
+    {
+      "id": "o-teatr-szerokosc-drzwi",
+      "target_type": "place",
+      "target_id": "p-teatr-slowackiego",
+      "feature": "door_width_cm",
+      "value": "115",
+      "source_name": "Dział Dostępności Teatru im. J. Słowackiego",
+      "source_url": "https://teatrwkrakowie.pl/dostepnosc",
+      "observed_at": "2026-09-01",
+      "verification": "confirmed"
+    },
+    {
+      "id": "o-teatr-miejsca-widownia",
+      "target_type": "place",
+      "target_id": "p-teatr-slowackiego",
+      "feature": "wheelchair_seats",
+      "value": "row_13_seats_1_2_14_15",
+      "source_name": "Dział Dostępności Teatru im. J. Słowackiego",
+      "source_url": "https://teatrwkrakowie.pl/dostepnosc",
+      "observed_at": "2026-09-01",
+      "verification": "confirmed"
+    },
+    {
+      "id": "o-teatr-koordynator",
+      "target_type": "place",
+      "target_id": "p-teatr-slowackiego",
+      "feature": "coordinator_contact",
+      "value": "Dominika Feiglewicz-Penarska / Julia Butryn (tel. 12 424 45 25)",
+      "source_name": "Dział Dostępności Teatru im. J. Słowackiego",
+      "source_url": "https://teatrwkrakowie.pl/dostepnosc",
+      "observed_at": "2026-09-01",
+      "verification": "confirmed"
+    },
+    {
+      "id": "o-teatr-wydarzenia-dostepne",
+      "target_type": "place",
+      "target_id": "p-teatr-slowackiego",
+      "feature": "cultural_events_a11y",
+      "value": "Dziady (audiodeskrypcja, PJM, touch tour 16:45); Znachor (pętla indukcyjna, miejsca dla wózków)",
+      "source_name": "Dział Dostępności Teatru im. J. Słowackiego",
+      "source_url": "https://teatrwkrakowie.pl/repertuar",
+      "observed_at": "2026-09-01",
+      "verification": "confirmed"
+    },
+    {
+      "id": "o-bagatela-wejscie-techniczne",
+      "target_type": "place",
+      "target_id": "p-teatr-bagatela",
+      "feature": "technical_entrance_krupnicza",
+      "value": "present_with_staff_assistance",
+      "source_name": "Informator Dostępności Teatru Bagatela",
+      "source_url": "https://bagatela.pl/dostepnosc",
+      "observed_at": "2026-08-15",
+      "verification": "confirmed"
+    }
+  ]
+}
+
