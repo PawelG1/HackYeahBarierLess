@@ -10,6 +10,7 @@ import '../viewmodels/route_setup_vm.dart';
 import '../widgets/map_preview.dart';
 import '../widgets/route_card.dart';
 import '../widgets/route_steps.dart';
+import 'route_navigation_screen.dart';
 import 'place_detail_screen.dart';
 
 /// Ekran 2: Porównanie tras z obsługą układu responsywnego (Telefon vs Tablet).
@@ -119,7 +120,21 @@ class _RouteComparisonScreenState extends ConsumerState<RouteComparisonScreen> {
                             ),
                             icon: const Icon(Icons.info_outline),
                             label: const Text('Dostępność celu i wydarzenia'),
+                          ),                          SizedBox(height: context.spacing.sm),
+                          ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: context.colors.statusConfirmedBg,
+                              foregroundColor: context.colors.background,
+                              minimumSize: Size(
+                                double.infinity,
+                                context.dimensions.minTouchTarget,
+                              ),
+                            ),
+                            onPressed: () => _startNavigation(context, selectedRoute, allNodes),
+                            icon: const Icon(Icons.navigation),
+                            label: const Text('Rozpocznij nawigację'),
                           ),
+
                         ],
                       ),
                     ),
@@ -231,7 +246,22 @@ class _RouteComparisonScreenState extends ConsumerState<RouteComparisonScreen> {
                       'Sprawdź dostępność wejścia i spektakle',
                       style: context.typography.button,
                     ),
+                  ),                  SizedBox(height: context.spacing.sm),
+                  ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: context.colors.statusConfirmedBg,
+                      foregroundColor: context.colors.background,
+                      padding: context.spacing.buttonDensePadding,
+                      minimumSize: context.dimensions.fullWidthButtonDenseSize,
+                    ),
+                    onPressed: () => _startNavigation(context, selectedRoute, allNodes),
+                    icon: const Icon(Icons.navigation),
+                    label: Text(
+                      'Rozpocznij nawigację',
+                      style: context.typography.button,
+                    ),
                   ),
+
                 ],
               );
             },
@@ -286,6 +316,14 @@ class _RouteComparisonScreenState extends ConsumerState<RouteComparisonScreen> {
             ),
           ],
         ],
+      ),
+    );
+  }
+
+  void _startNavigation(BuildContext context, RouteResult route, List<RouteNode> allNodes) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => RouteNavigationScreen(route: route, allNodes: allNodes),
       ),
     );
   }
